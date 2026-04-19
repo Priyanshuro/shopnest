@@ -1,0 +1,152 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-display: "Bricolage Grotesque";
+    --font-body: "Figtree";
+    --font-mono: "Geist Mono";
+    --radius: 0.75rem;
+
+    --background: 0.985 0 0;
+    --foreground: 0.18 0 0;
+    --card: 1.0 0 0;
+    --card-foreground: 0.18 0 0;
+    --popover: 1.0 0 0;
+    --popover-foreground: 0.18 0 0;
+
+    --primary: 0.62 0.19 34;
+    --primary-foreground: 0.98 0 0;
+
+    --secondary: 0.92 0.025 60;
+    --secondary-foreground: 0.25 0 0;
+    --muted: 0.92 0 0;
+    --muted-foreground: 0.5 0 0;
+
+    --accent: 0.62 0.19 34;
+    --accent-foreground: 0.98 0 0;
+
+    --destructive: 0.55 0.22 25;
+    --destructive-foreground: 0.98 0 0;
+
+    --border: 0.88 0.01 60;
+    --input: 0.92 0 0;
+    --ring: 0.62 0.19 34;
+
+    --chart-1: 0.62 0.19 34;
+    --chart-2: 0.7 0.15 180;
+    --chart-3: 0.5 0.08 120;
+    --chart-4: 0.85 0.18 80;
+    --chart-5: 0.65 0.2 50;
+
+    --sidebar: 0.985 0 0;
+    --sidebar-foreground: 0.18 0 0;
+    --sidebar-primary: 0.62 0.19 34;
+    --sidebar-primary-foreground: 0.98 0 0;
+    --sidebar-accent: 0.92 0.025 60;
+    --sidebar-accent-foreground: 0.25 0 0;
+    --sidebar-border: 0.88 0.01 60;
+    --sidebar-ring: 0.62 0.19 34;
+  }
+
+  .dark {
+    --background: 0.12 0 0;
+    --foreground: 0.93 0 0;
+    --card: 0.16 0 0;
+    --card-foreground: 0.93 0 0;
+    --popover: 0.2 0 0;
+    --popover-foreground: 0.93 0 0;
+
+    --primary: 0.75 0.15 34;
+    --primary-foreground: 0.12 0 0;
+
+    --secondary: 0.22 0 0;
+    --secondary-foreground: 0.85 0 0;
+    --muted: 0.2 0 0;
+    --muted-foreground: 0.55 0 0;
+
+    --accent: 0.75 0.15 34;
+    --accent-foreground: 0.12 0 0;
+
+    --destructive: 0.65 0.19 22;
+    --destructive-foreground: 0.12 0 0;
+
+    --border: 0.25 0.01 60;
+    --input: 0.2 0 0;
+    --ring: 0.75 0.15 34;
+
+    --chart-1: 0.75 0.15 34;
+    --chart-2: 0.65 0.15 180;
+    --chart-3: 0.7 0.12 120;
+    --chart-4: 0.5 0.2 80;
+    --chart-5: 0.55 0.22 50;
+
+    --sidebar: 0.16 0 0;
+    --sidebar-foreground: 0.93 0 0;
+    --sidebar-primary: 0.75 0.15 34;
+    --sidebar-primary-foreground: 0.12 0 0;
+    --sidebar-accent: 0.22 0 0;
+    --sidebar-accent-foreground: 0.85 0 0;
+    --sidebar-border: 0.25 0.01 60;
+    --sidebar-ring: 0.75 0.15 34;
+  }
+
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+  }
+}
+
+@font-face {
+  font-family: "Bricolage Grotesque";
+  src: url("/assets/fonts/BricolageGrotesque.woff2") format("woff2");
+  font-weight: 400 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Figtree";
+  src: url("/assets/fonts/Figtree.woff2") format("woff2");
+  font-weight: 400 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Geist Mono";
+  src: url("/assets/fonts/GeistMono.woff2") format("woff2");
+  font-weight: 400 700;
+  font-display: swap;
+}
+
+@layer utilities {
+  .transition-smooth {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .hover-zoom {
+    @apply transition-smooth hover:scale-105 cursor-pointer;
+  }
+
+  .card-shadow {
+    @apply shadow-md;
+  }
+
+  .btn-primary {
+    @apply px-6 py-3 bg-accent text-accent-foreground rounded-lg transition-smooth hover:scale-105 active:scale-95 font-display font-bold;
+  }
+
+  .badge-verified {
+    @apply inline-flex items-center gap-1 px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-mono font-semibold;
+  }
+
+  .badge-fast-delivery {
+    @apply inline-flex items-center gap-1 px-3 py-1 bg-accent/10 text-accent rounded-full text-xs font-mono font-semibold;
+  }
+
+  .gradient-hero {
+    @apply bg-gradient-to-b from-black/60 via-black/40 to-black/20;
+  }
+}

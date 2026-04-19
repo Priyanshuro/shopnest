@@ -1,0 +1,27 @@
+{
+  "overview": "ShopNest is a hyperlocal fashion e-commerce platform connecting verified local sellers in Tier-2 and Tier-3 cities with young digital shoppers. Features affordable fashion, fast 24–48hr delivery, and seller verification for trust.",
+  "features": [
+    "Hero landing page with fashion lifestyle imagery and CTAs",
+    "Product browsing with grid layout, hover zoom, and category/price/rating filters",
+    "Product detail page with gallery, reviews, seller info, and verified badge",
+    "Shopping cart and Stripe-powered checkout",
+    "Order tracking with status timeline",
+    "Seller dashboard with product management, inventory, and earnings",
+    "Admin dashboard with seller verification, user management, and revenue analytics",
+    "User profile with order history and wishlist",
+    "Hyperlocal seller detection via browser geolocation",
+    "Role-based access for customers, sellers, and admins"
+  ],
+  "category": "e-commerce",
+  "tags": [
+    "fashion",
+    "ecommerce",
+    "hyperlocal",
+    "sellers",
+    "marketplace",
+    "shopping",
+    "react",
+    "tailwind"
+  ],
+  "last_updated": "2026-04-19T09:58:08.927Z"
+}

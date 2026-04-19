@@ -1,0 +1,196 @@
+type http_request_result = 
+ record {
+   body: blob;
+   headers: vec http_header;
+   status: nat;
+ };
+type http_header = 
+ record {
+   name: text;
+   value: text;
+ };
+type _ImmutableObjectStorageRefillResult = 
+ record {
+   success: opt bool;
+   topped_up_amount: opt nat;
+ };
+type _ImmutableObjectStorageRefillInformation = record {
+                                                  proposed_top_up_amount:
+                                                   opt nat;};
+type _ImmutableObjectStorageCreateCertificateResult = 
+ record {
+   blob_hash: text;
+   method: text;
+ };
+type UserRole = 
+ variant {
+   admin;
+   guest;
+   user;
+ };
+type UserId = principal;
+type TransformationOutput = 
+ record {
+   body: blob;
+   headers: vec http_header;
+   status: nat;
+ };
+type TransformationInput = 
+ record {
+   context: blob;
+   response: http_request_result;
+ };
+type Timestamp = int;
+type StripeSessionStatus = 
+ variant {
+   completed: record {
+                response: text;
+                userPrincipal: opt text;
+              };
+   failed: record {error: text;};
+ };
+type StripeConfiguration = 
+ record {
+   allowedCountries: vec text;
+   secretKey: text;
+ };
+type ShoppingItem = 
+ record {
+   currency: text;
+   priceInCents: nat;
+   productDescription: text;
+   productName: text;
+   quantity: nat;
+ };
+type SellerId = text;
+type Seller = 
+ record {
+   city: text;
+   commissionRate: float64;
+   description: text;
+   id: SellerId;
+   isVerified: bool;
+   joinedAt: Timestamp;
+   name: text;
+   pincode: text;
+   shopImage: text;
+   shopName: text;
+   totalSales: nat;
+ };
+type ReviewId = text;
+type Review = 
+ record {
+   comment: text;
+   createdAt: Timestamp;
+   customerId: UserId;
+   id: ReviewId;
+   productId: ProductId;
+   rating: nat;
+ };
+type ProductId = text;
+type Product = 
+ record {
+   category: text;
+   city: text;
+   createdAt: Timestamp;
+   description: text;
+   discountedPrice: nat;
+   hasFastDelivery: bool;
+   id: ProductId;
+   images: vec text;
+   isVerified: bool;
+   name: text;
+   price: nat;
+   rating: float64;
+   reviewCount: nat;
+   sellerId: SellerId;
+   sellerName: text;
+   stock: nat;
+ };
+type OrderItem = 
+ record {
+   price: nat;
+   productId: ProductId;
+   productName: text;
+   quantity: nat;
+   sellerName: text;
+ };
+type OrderId = text;
+type Order = 
+ record {
+   commissionAmount: nat;
+   createdAt: Timestamp;
+   customerId: UserId;
+   deliveryAddress: text;
+   id: OrderId;
+   items: vec OrderItem;
+   paymentId: text;
+   status: text;
+   totalAmount: nat;
+ };
+type CartItem = 
+ record {
+   price: nat;
+   productId: ProductId;
+   quantity: nat;
+ };
+type Analytics = 
+ record {
+   growth: float64;
+   monthlyRevenue: vec nat;
+   topCategories: vec record {
+                        text;
+                        nat;
+                      };
+ };
+type AdminStats = 
+ record {
+   pendingVerifications: nat;
+   totalCommission: nat;
+   totalOrders: nat;
+   totalRevenue: nat;
+ };
+service : {
+  _immutableObjectStorageBlobsAreLive: (hashes: vec blob) -> (vec bool) query;
+  _immutableObjectStorageBlobsToDelete: () -> (vec blob) query;
+  _immutableObjectStorageConfirmBlobDeletion: (blobs: vec blob) -> ();
+  _immutableObjectStorageCreateCertificate: (blobHash: text) ->
+   (_ImmutableObjectStorageCreateCertificateResult);
+  _immutableObjectStorageRefillCashier: (refillInformation:
+   opt _ImmutableObjectStorageRefillInformation) ->
+   (_ImmutableObjectStorageRefillResult);
+  _immutableObjectStorageUpdateGatewayPrincipals: () -> ();
+  _initializeAccessControl: () -> ();
+  addReview: (productId: ProductId, rating: nat, comment: text) -> (Review);
+  assignCallerUserRole: (user: principal, role: UserRole) -> ();
+  createCheckoutSession: (items: vec ShoppingItem, successUrl: text,
+   cancelUrl: text) -> (text);
+  createOrder: (items: vec CartItem, totalAmount: nat, deliveryAddress:
+   text) -> (Order);
+  deleteProduct: (productId: ProductId) -> ();
+  getAdminStats: () -> (AdminStats) query;
+  getAllOrders: () -> (vec Order) query;
+  getAllUsers: () -> (vec principal) query;
+  getAnalytics: () -> (Analytics) query;
+  getCallerUserRole: () -> (UserRole) query;
+  getFeaturedProducts: () -> (vec Product) query;
+  getOrderById: (orderId: OrderId) -> (opt Order) query;
+  getOrders: (_customerId: text) -> (vec Order) query;
+  getProductById: (id: ProductId) -> (opt Product) query;
+  getProducts: () -> (vec Product) query;
+  getProductsByCategory: (category: text) -> (vec Product) query;
+  getReviews: (productId: ProductId) -> (vec Review) query;
+  getSellerEarnings: (sellerId: SellerId) -> (nat) query;
+  getSellerOrders: (sellerId: SellerId) -> (vec Order) query;
+  getSellerProducts: (sellerId: SellerId) -> (vec Product) query;
+  getSellers: () -> (vec Seller) query;
+  getStripeSessionStatus: (sessionId: text) -> (StripeSessionStatus);
+  getVerifiedSellers: () -> (vec Seller) query;
+  isCallerAdmin: () -> (bool) query;
+  isStripeConfigured: () -> (bool) query;
+  setStripeConfiguration: (config: StripeConfiguration) -> ();
+  transform: (input: TransformationInput) -> (TransformationOutput) query;
+  updateOrderStatus: (orderId: OrderId, status: text) -> (bool);
+  upsertProduct: (product: Product) -> ();
+  verifySeller: (sellerId: SellerId) -> (bool);
+}
